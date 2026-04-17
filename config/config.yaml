@@ -1,0 +1,5 @@
+InstanceCount: 1
+InstanceType: ml.g5.xlarge
+VolumeSizeInGB: 125
+ContainerEntrypoint: ["/bin/bash",  "./run_job.sh"]
+ContainerArguments: ["300"]
