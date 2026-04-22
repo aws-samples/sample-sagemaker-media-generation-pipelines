@@ -1,0 +1,50 @@
+enabled: true
+notification_email: null
+source_excludes:
+  - ".venv"
+  - "cdk.out"
+  - "cdk.out.*"
+  - ".cdk.staging"
+  - ".git"
+  - "__pycache__"
+  - ".hypothesis"
+  - ".ruff_cache"
+  - "node_modules"
+  - "*.pyc"
+  - "data"
+compute_type: "X2_LARGE"
+timeout_minutes: 60
+test_commands:
+  config_vrag.yaml: "uv run pytest tests/unit/ -x --no-header -q -n auto -m 'core or cicd or retrieval or processing or model_validation or steps_vrag or steps_i2v or steps_setup or integration'"
+  config_i2v.yaml: "uv run pytest tests/unit/ -x --no-header -q -n auto -m 'core or cicd or processing or model_validation or steps_i2v or integration'"
+  config_motionart.yaml: "uv run pytest tests/unit/ -x --no-header -q -n auto -m 'core or cicd or processing or model_validation or steps_captioning or steps_flf2v or integration'"
+  config_t2a.yaml: "uv run pytest tests/unit/ -x --no-header -q -n auto -m 'core or cicd or processing or model_validation or steps_t2a or integration'"
+  config_t2i.yaml: "uv run pytest tests/unit/ -x --no-header -q -n auto -m 'core or cicd or processing or model_validation or steps_t2i or integration'"
+  config_t2v.yaml: "uv run pytest tests/unit/ -x --no-header -q -n auto -m 'core or cicd or processing or model_validation or steps_t2v or integration'"
+rollback: true
+test_a2i: false
+shared_prefix: dev
+pipeline_configs:
+  - "config_vrag.yaml"
+  - "config_i2v.yaml"
+  - "config_motionart.yaml"
+  - "config_t2a.yaml"
+  - "config_t2i.yaml"
+  - "config_t2v.yaml"
+
+# Maps each config file to its sample_input_data/ paths for the UploadInput stage.
+# Paths are relative to sample_input_data/.
+input_data:
+  config_vrag.yaml:
+    - "inputs_t2v.json"
+  config_i2v.yaml:
+    - "inputs_i2v.json"
+    - "images/i2v/"
+  config_motionart.yaml:
+    - "images/captioning/"
+  config_t2a.yaml:
+    - "inputs_audio.json"
+  config_t2i.yaml:
+    - "inputs_t2v.json"
+  config_t2v.yaml:
+    - "inputs_t2v.json"

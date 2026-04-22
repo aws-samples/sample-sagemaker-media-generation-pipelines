@@ -1,0 +1,7 @@
+[
+  {"id": "sample_001", "prompt": "A serene mountain landscape at sunset with golden light", "image": "mountain_sunset.png"},
+  {"id": "sample_002", "prompt": "A futuristic city skyline with neon lights reflecting on water", "image": "neon_city.png"},
+  {"id": "sample_003", "prompt": "A close-up of a blooming cherry blossom tree in spring", "image": "cherry_blossom.jpg"},
+  {"id": "sample_004", "prompt": "An astronaut floating in space with Earth in the background", "image": "astronaut_space.png"},
+  {"id": "sample_005", "prompt": "A cozy cabin in a snowy forest with smoke rising from the chimney", "image": "snowy_cabin.jpg"}
+]

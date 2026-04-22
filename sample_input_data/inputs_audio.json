@@ -1,0 +1,32 @@
+[
+  {
+    "id": "neo-soul-groove",
+    "tags": "Neo-Soul: A warm, organic neo-soul track dripping with live instrumentation and effortless groove. A live drummer plays a loose, hip-hop influenced pocket—soft kick drum with lazy swing, snare hits that sit just behind the beat, and brushed hi-hats that breathe and shuffle with human imperfection.",
+    "lyrics": "[Intro - Guitar Riff & Drums]\nmm…yeah…let it breathe…\n\n[Verse 1]\nLate night glow on your skin\nWindow cracked, city hums again\nCoffee rings on the table top\nTime don't rush, it just drops\n\nLoose kick drum, heart runs slow\nSnare talks back, says \"take it low\"\nEvery step just slightly late\nStill we land right on the faith\n\n[Verse]\nYour laugh swings behind the beat\nBarefoot dancing on the street\nNothing polished, nothing tight\nFeels more real that way tonight\n\nBrush those hats, let them slide\nLeave some space where truth can hide\nIf it falls, let it fall\nThat's the soul inside it all\n\n[Pre-Chorus]\nNo count-in for this kind of love\nWe don't line it up\nWe just lean and trust\n\n[Chorus]\nStay right there, don't pull it straight\nI love how we arrive late\nOff the grid but locked in time\nThat lazy swing feels like mine\nYeah we bend, we drift, we sway\nLet tomorrow wait its turn today\nIf love lives just off the line\nSoft kick drum, your hand in mine\n\n[Outro - Guitar Riff & Final Chord]\nno rush…no rush…just groove…",
+    "bpm": 190,
+    "duration": 120,
+    "timesignature": "4",
+    "language": "en",
+    "keyscale": "E minor"
+  },
+  {
+    "id": "midnight-lo-fi",
+    "tags": "Lo-Fi Hip Hop: A hazy, tape-saturated lo-fi beat built for late-night headphone sessions. Dusty vinyl crackle sits underneath a mellow Rhodes piano loop with detuned chords that drift in and out of tune. A boom-bap drum machine lays down a slow, head-nodding groove with a punchy kick and a snare drenched in reverb.",
+    "lyrics": "[Intro - Piano Loop & Vinyl Crackle]\n...\n\n[Verse 1]\nRain taps glass like a metronome\nBlue light hums, I'm here alone\nPages turn but the words blur out\nStatic fills what I think about\n\nDusty keys, a broken phrase\nLooping back through purple haze\nNothing moves but the second hand\nSlipping through like grains of sand\n\n[Verse 2]\nOld voicemail I won't delete\nYour laugh still makes the loop complete\nFaded photo on the wall\nSmall things hold the most of all\n\nBass drops low beneath the floor\nKick drum knocks like an open door\nLet it ride, no need to change\nComfort lives inside the strange\n\n[Chorus]\nRewind the night, press play again\nSame four bars, same old friend\nNothing new but nothing wrong\nJust a beat that hums along\n\n[Outro - Tape Stop]\n...yeah...",
+    "bpm": 78,
+    "duration": 150,
+    "timesignature": "4",
+    "language": "en",
+    "keyscale": "D flat major"
+  },
+  {
+    "id": "cumbia-del-amanecer",
+    "tags": "Cumbia Electrónica: A modern electronic cumbia fusion blending traditional Colombian rhythms with synth textures. A güira scrapes out the classic cumbia shuffle while an 808 sub-bass pulses underneath. Accordion melodies weave through shimmering arpeggiated synths and hand percussion.",
+    "lyrics": "[Intro - Güira & Synth Pad]\ndale…dale…\n\n[Verso 1]\nSale el sol por el malecón\nPies descalzos, cumbia y ron\nLa marea sube y baja igual\nComo el ritmo que no para ya\n\nAcordeón entre las olas\nSintetizador que vuela sola\nBajo tierra tiembla el beat\nY la calle empieza a arder\n\n[Verso 2]\nManos arriba, cintura baja\nEl amanecer no tiene prisa\nLuces de neón sobre la playa\nCada paso deja su sonrisa\n\n[Coro]\nBaila hasta que salga el sol\nQue la cumbia no pide razón\nPie derecho, corazón\nEl ritmo es la conversación\n\n[Outro - Accordion Fade]\nuna vez más…una vez más…",
+    "bpm": 100,
+    "duration": 180,
+    "timesignature": "4",
+    "language": "es",
+    "keyscale": "A minor"
+  }
+]

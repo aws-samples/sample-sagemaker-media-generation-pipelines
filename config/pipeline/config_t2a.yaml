@@ -1,0 +1,40 @@
+construct_id: t2a
+
+s3_downloads:
+  # ACE Step 1.5 Turbo AIO
+  - url: "https://huggingface.co/Comfy-Org/ace_step_1.5_ComfyUI_files/resolve/main/checkpoints/ace_step_1.5_turbo_aio.safetensors"
+    path: "ace_step/checkpoints/ace_step_1.5_turbo_aio.safetensors"
+
+dynamodb:
+  partition_key: id
+  sort_key: step
+
+steps:
+  t2a:
+    InstanceCount: 2
+    InstanceType: ml.g5.xlarge
+    VolumeSizeInGB: 50
+    ContainerEntrypoint: ["python3", "main.py"]
+    ContainerArguments: ["--generate"]
+    models_prefix: ["ace_step"]
+    num_assets_per_prompt: 3
+
+# A2I human review configurations
+a2i:
+  t2a:
+    media_type: audio
+    task_title: "Review generated audio"
+    task_description: "Which is the best version of the audio?"
+    task_count: 1
+    task_timeout_seconds: 3600
+
+# Lambda steps invoked as SageMaker Pipeline steps
+lambda_steps:
+  submit_a2i_t2a:
+    lambda_path: submit_a2i_review
+    a2i_name: t2a
+    media_type: audio
+
+pipeline_graph:
+  t2a: []
+  submit_a2i_t2a: ["t2a"]

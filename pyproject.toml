@@ -1,0 +1,103 @@
+[project]
+name = "media-generation-pipelines"
+version = "0.1.0"
+description = "Config-driven framework for batch media generation and evaluation using AWS SageMaker Pipelines"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aws-cdk-lib>=2.212.0",
+    "aws-durable-execution-sdk-python>=1.3.0",
+    "cdk-nag>=2.37.10",
+    "cfnresponse>=1.1.4",
+    "dotenv>=0.9.9",
+    "loguru>=0.7.0",
+    "pydantic>=2.11.7",
+    "python-dotenv>=1.1.1",
+    "pyyaml>=6.0.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "aws-lambda-powertools>=3.0.0",
+    "boto3>=1.42.0",
+    "checkov",
+    "datasets>=3.0.0",
+    "rustworkx==0.17.1",
+    "detect-secrets",
+    "hypothesis>=6.151.0",
+    "mypy",
+    "opensearch-py>=2.0.0",
+    "pre-commit",
+    "pyarrow>=15.0.0",
+    "pytest>=8.0.0",
+    "pytest-xdist>=3.5.0",
+    "pytest-cov>=7.0.0",
+    "requests-aws4auth>=1.2.0",
+    "ruff",
+    "streamlit>=1.45.0",
+]
+
+[tool.pytest.ini_options]
+markers = [
+    "core: shared infrastructure, constructs, config models, security properties",
+    "cicd: CI/CD pipeline stack, config, deploy script",
+    "retrieval: retrieval stack, config, container, ingest Lambda",
+    "processing: processing job construct, model, Dockerfiles",
+    "model_validation: model validation agent, captioning, t2a, t2i, vbench",
+    "steps_vrag: V-RAG LLM step tests",
+    "steps_t2v: text-to-video step tests",
+    "steps_captioning: captioning step tests",
+    "steps_t2a: text-to-audio step tests",
+    "steps_t2i: text-to-image step tests",
+    "steps_i2v: image-to-video step tests",
+    "steps_flf2v: first-last-frame-to-video step tests",
+    "steps_loadtest: load test Lambda tests",
+    "steps_setup: setup container tests (dataset_ingest)",
+    "integration: full stack chain integration tests",
+]
+
+[dependency-groups]
+dev = [
+    "aws-durable-execution-sdk-python-testing>=1.1.1",
+    "scipy>=1.17.1",
+]
+
+[tool.mypy]
+python_version = "3.13"
+ignore_missing_imports = true
+warn_return_any = true
+warn_unused_configs = true
+exclude = ["tests/", "view_assets/", "processing_job/", "cdk\\.out"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 120
+exclude = ["cdk.out*", ".venv", "view_assets/", "*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "S", "SIM", "T20"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S108", "E402", "SIM117", "SIM102", "SIM118", "B007", "E741", "B905", "S603"]
+"lambdas/**" = ["T20", "S311", "S108", "UP017"]
+"processing_job/**" = ["T20", "F403", "F405", "E402", "S603", "S607", "S310", "S108", "SIM108", "SIM115", "SIM105", "B904", "UP017"]
+"infrastructure/cicd_pipeline/buildspecs.py" = ["S603", "S607"]
+"infrastructure/cicd_pipeline/resolve_stacks.py" = ["T201"]
+"project_constructs/lambda_function.py" = ["S603", "S607"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["config", "infrastructure", "project_constructs", "lambdas", "processing_job"]
+
+[tool.coverage.run]
+source = ["config", "infrastructure", "project_constructs"]
+omit = ["*/cdk.out/*", "*/.venv/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.",
+    "if TYPE_CHECKING:",
+]

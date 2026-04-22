@@ -1,0 +1,84 @@
+construct_id: t2v
+
+s3_downloads:
+  # Wan 2.2 T2V
+  - url: "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors"
+    path: "wan_22_t2v/diffusion_models/wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors"
+  - url: "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_t2v_high_noise_14B_fp8_scaled.safetensors"
+    path: "wan_22_t2v/diffusion_models/wan2.2_t2v_high_noise_14B_fp8_scaled.safetensors"
+  - url: "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_t2v_lightx2v_4steps_lora_v1.1_high_noise.safetensors"
+    path: "wan_22_t2v/loras/wan2.2_t2v_lightx2v_4steps_lora_v1.1_high_noise.safetensors"
+  - url: "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_t2v_lightx2v_4steps_lora_v1.1_low_noise.safetensors"
+    path: "wan_22_t2v/loras/wan2.2_t2v_lightx2v_4steps_lora_v1.1_low_noise.safetensors"
+  - url: "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+    path: "wan_22_t2v/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+  - url: "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors"
+    path: "wan_22_t2v/vae/wan_2.1_vae.safetensors"
+
+  # VBench evaluation models
+  - url: "https://raw.githubusercontent.com/LAION-AI/aesthetic-predictor/main/sa_0_4_vit_l_14_linear.pth"
+    path: "vbench/aesthetic_model/emb_reader/sa_0_4_vit_l_14_linear.pth"
+  - url: "https://huggingface.co/lalala125/AMT/resolve/main/amt-s.pth"
+    path: "vbench/amt_model/amt-s.pth"
+  - url: "https://huggingface.co/spaces/xinyu1205/recognize-anything/resolve/main/tag2text_swin_14m.pth"
+    path: "vbench/caption_model/tag2text_swin_14m.pth"
+  - url: "https://openaipublic.azureedge.net/clip/models/40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af/ViT-B-32.pt"
+    path: "vbench/clip_model/ViT-B-32.pt"
+  - url: "https://openaipublic.azureedge.net/clip/models/b8cca3fd41ae0c99ba7e8951adf17d267cdb84cd88be6f7c2e0eca1737a03836/ViT-L-14.pt"
+    path: "vbench/clip_model/ViT-L-14.pt"
+  - url: "https://huggingface.co/OpenGVLab/VBench_Used_Models/resolve/main/grit_b_densecap_objectdet.pth"
+    path: "vbench/grit_model/grit_b_densecap_objectdet.pth"
+  - url: "https://github.com/chaofengc/IQA-PyTorch/releases/download/v0.1-weights/musiq_spaq_ckpt-358bb6af.pth"
+    path: "vbench/pyiqa_model/musiq_spaq_ckpt-358bb6af.pth"
+  - url: "https://dl.dropboxusercontent.com/s/4j4z58wuv8o0mfz/models.zip"
+    path: "vbench/raft_model"
+    extract: true
+  - url: "https://huggingface.co/OpenGVLab/VBench_Used_Models/resolve/main/l16_ptk710_ftk710_ftk400_f16_res224.pth"
+    path: "vbench/umt_model/l16_ptk710_ftk710_ftk400_f16_res224.pth"
+  - url: "https://huggingface.co/OpenGVLab/VBench_Used_Models/resolve/main/ViClip-InternVid-10M-FLT.pth"
+    path: "vbench/ViCLIP/ViClip-InternVid-10M-FLT.pth"
+  - url: "https://dl.fbaipublicfiles.com/dino/dino_vitbase16_pretrain/dino_vitbase16_pretrain.pth"
+    path: "vbench/dino_model/dino_vitbase16_pretrain.pth"
+
+dynamodb:
+  partition_key: id
+  sort_key: step
+
+steps:
+  t2v:
+    InstanceCount: 2
+    InstanceType: ml.g5.xlarge
+    VolumeSizeInGB: 125
+    ContainerEntrypoint: ["python3", "main.py"]
+    ContainerArguments: ["--model", "wan", "--mode", "t2v"]
+    models_prefix: ["wan_22_t2v"]
+    num_assets_per_prompt: 3
+
+  vbench_t2v:
+    InstanceCount: 1
+    InstanceType: ml.g5.xlarge
+    VolumeSizeInGB: 125
+    ContainerEntrypoint: ["python3", "main.py"]
+    ContainerArguments: ["--script", "evaluate.py", "--videos-path", "/opt/ml/processing/input/videos", "--output-path", "/opt/ml/processing/output", "--models-path", "/opt/ml/processing/input/models"]
+    models_prefix: ["vbench"]
+    ecr_image: "vbench"
+    input_channel: "videos"
+
+a2i:
+  t2v:
+    media_type: video
+    task_title: "Review generated video (t2v)"
+    task_description: "Compare the generated videos and select the best one."
+    task_count: 1
+    task_timeout_seconds: 3600
+
+lambda_steps:
+  submit_a2i_t2v:
+    lambda_path: submit_a2i_review
+    a2i_name: t2v
+    media_type: video
+
+pipeline_graph:
+  t2v: []
+  vbench_t2v: ["t2v"]
+  submit_a2i_t2v: ["t2v"]

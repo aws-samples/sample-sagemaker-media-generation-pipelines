@@ -1,0 +1,49 @@
+repos:
+  # Linting & formatting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.8
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  # Type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.16.0
+    hooks:
+      - id: mypy
+        args: [--ignore-missing-imports, --no-error-summary, --explicit-package-bases]
+        additional_dependencies:
+          - aws-cdk-lib>=2.212.0
+          - pydantic>=2.11.7
+          - pyyaml>=6.0.2
+          - loguru>=0.7.0
+          - types-PyYAML
+        exclude: ^(tests/|scripts/|view_assets/|processing_job/|cdk\.out)
+
+  # IaC security - checkov (uses project venv to avoid Rust compiler requirement)
+  - repo: local
+    hooks:
+      - id: checkov
+        name: checkov
+        entry: uv run checkov -d processing_job/ --framework dockerfile --quiet --compact --skip-check CKV_DOCKER_2,CKV_DOCKER_3
+        language: system
+        pass_filenames: false
+        always_run: true
+
+  # General file hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^(\.kiro/|assets/|.*README\.md$)
+      - id: end-of-file-fixer
+        exclude: ^(\.kiro/|assets/|.*README\.md$)
+      - id: check-yaml
+        args: [--unsafe]
+        exclude: ^(\.kiro/|assets/)
+      - id: check-json
+        exclude: ^(\.kiro/|assets/)
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=500]

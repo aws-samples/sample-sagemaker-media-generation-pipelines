@@ -1,0 +1,18 @@
+# Known model identifiers used in filenames and DynamoDB sort keys.
+#
+# Each key is a constant name, each value is the model suffix used in
+# file_prefix patterns: {input_id}_{model}[_g{N}]_{frame}_.ext
+#
+# Longer variants MUST come before shorter ones so regex matching
+# picks the most specific match first (e.g. wan22_flf before wan22).
+#
+# Usage:
+#   from schema.models import KNOWN_MODELS
+#   for model in KNOWN_MODELS:
+#       ...
+
+- wan22_flf
+- wan22
+- ltx23
+- ace_step
+- z_image_turbo

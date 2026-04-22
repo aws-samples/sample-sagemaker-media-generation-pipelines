@@ -1,0 +1,133 @@
+construct_id: ma
+
+s3_downloads:
+  # Qwen2.5-VL-7B-Instruct (vision-language model for image captioning)
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/config.json"
+    path: "qwen2_5_vl_7b/config.json"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/generation_config.json"
+    path: "qwen2_5_vl_7b/generation_config.json"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/chat_template.json"
+    path: "qwen2_5_vl_7b/chat_template.json"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/tokenizer_config.json"
+    path: "qwen2_5_vl_7b/tokenizer_config.json"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/tokenizer.json"
+    path: "qwen2_5_vl_7b/tokenizer.json"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/vocab.json"
+    path: "qwen2_5_vl_7b/vocab.json"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/merges.txt"
+    path: "qwen2_5_vl_7b/merges.txt"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/preprocessor_config.json"
+    path: "qwen2_5_vl_7b/preprocessor_config.json"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/model.safetensors.index.json"
+    path: "qwen2_5_vl_7b/model.safetensors.index.json"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/model-00001-of-00005.safetensors"
+    path: "qwen2_5_vl_7b/model-00001-of-00005.safetensors"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/model-00002-of-00005.safetensors"
+    path: "qwen2_5_vl_7b/model-00002-of-00005.safetensors"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/model-00003-of-00005.safetensors"
+    path: "qwen2_5_vl_7b/model-00003-of-00005.safetensors"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/model-00004-of-00005.safetensors"
+    path: "qwen2_5_vl_7b/model-00004-of-00005.safetensors"
+  - url: "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct/resolve/main/model-00005-of-00005.safetensors"
+    path: "qwen2_5_vl_7b/model-00005-of-00005.safetensors"
+
+  # Qwen3.5-9B (text-only model — not suitable for image captioning)
+  # To use, update models_prefix and CAPTION_MODEL_NAME in the captioning step,
+  # and modify main.py to use a text-only inference path.
+  # - url: "https://huggingface.co/Qwen/Qwen3.5-9B/resolve/main/config.json"
+  #   path: "qwen3_5_9b/config.json"
+  # ... (remaining files omitted)
+
+  # Wan 2.2 I2V (used by flf2v step)
+  - url: "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors"
+    path: "wan_22_i2v/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors"
+  - url: "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors"
+    path: "wan_22_i2v/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors"
+  - url: "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors"
+    path: "wan_22_i2v/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors"
+  - url: "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors"
+    path: "wan_22_i2v/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors"
+  - url: "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+    path: "wan_22_i2v/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+  - url: "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors"
+    path: "wan_22_i2v/vae/wan_2.1_vae.safetensors"
+
+  # VBench evaluation models
+  - url: "https://raw.githubusercontent.com/LAION-AI/aesthetic-predictor/main/sa_0_4_vit_l_14_linear.pth"
+    path: "vbench/aesthetic_model/emb_reader/sa_0_4_vit_l_14_linear.pth"
+  - url: "https://huggingface.co/lalala125/AMT/resolve/main/amt-s.pth"
+    path: "vbench/amt_model/amt-s.pth"
+  - url: "https://huggingface.co/spaces/xinyu1205/recognize-anything/resolve/main/tag2text_swin_14m.pth"
+    path: "vbench/caption_model/tag2text_swin_14m.pth"
+  - url: "https://openaipublic.azureedge.net/clip/models/40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af/ViT-B-32.pt"
+    path: "vbench/clip_model/ViT-B-32.pt"
+  - url: "https://openaipublic.azureedge.net/clip/models/b8cca3fd41ae0c99ba7e8951adf17d267cdb84cd88be6f7c2e0eca1737a03836/ViT-L-14.pt"
+    path: "vbench/clip_model/ViT-L-14.pt"
+  - url: "https://huggingface.co/OpenGVLab/VBench_Used_Models/resolve/main/grit_b_densecap_objectdet.pth"
+    path: "vbench/grit_model/grit_b_densecap_objectdet.pth"
+  - url: "https://github.com/chaofengc/IQA-PyTorch/releases/download/v0.1-weights/musiq_spaq_ckpt-358bb6af.pth"
+    path: "vbench/pyiqa_model/musiq_spaq_ckpt-358bb6af.pth"
+  - url: "https://dl.dropboxusercontent.com/s/4j4z58wuv8o0mfz/models.zip"
+    path: "vbench/raft_model"
+    extract: true
+  - url: "https://huggingface.co/OpenGVLab/VBench_Used_Models/resolve/main/l16_ptk710_ftk710_ftk400_f16_res224.pth"
+    path: "vbench/umt_model/l16_ptk710_ftk710_ftk400_f16_res224.pth"
+  - url: "https://huggingface.co/OpenGVLab/VBench_Used_Models/resolve/main/ViClip-InternVid-10M-FLT.pth"
+    path: "vbench/ViCLIP/ViClip-InternVid-10M-FLT.pth"
+  - url: "https://dl.fbaipublicfiles.com/dino/dino_vitbase16_pretrain/dino_vitbase16_pretrain.pth"
+    path: "vbench/dino_model/dino_vitbase16_pretrain.pth"
+
+dynamodb:
+  partition_key: id
+  sort_key: step
+
+steps:
+
+  captioning:
+    InstanceCount: 1
+    InstanceType: ml.g5.xlarge
+    VolumeSizeInGB: 100
+    ContainerEntrypoint: ["python3", "main.py"]
+    ContainerArguments: ["--caption"]
+    models_prefix: ["qwen2_5_vl_7b"]
+    Environment:
+      CAPTION_MODEL_NAME: "qwen2_5_vl_7b"
+
+  flf2v:
+    InstanceCount: 1
+    InstanceType: ml.g5.xlarge
+    VolumeSizeInGB: 125
+    ContainerEntrypoint: ["python3", "main.py"]
+    ContainerArguments: ["--generate"]
+    models_prefix: ["wan_22_i2v"]
+    num_assets_per_prompt: 2
+
+  vbench_flf2v:
+    InstanceCount: 1
+    InstanceType: ml.g5.xlarge
+    VolumeSizeInGB: 125
+    ContainerEntrypoint: ["python3", "main.py"]
+    ContainerArguments: ["--script", "evaluate.py", "--videos-path", "/opt/ml/processing/input/videos", "--output-path", "/opt/ml/processing/output", "--models-path", "/opt/ml/processing/input/models"]
+    models_prefix: ["vbench"]
+    ecr_image: "vbench"
+    input_channel: "videos"
+
+a2i:
+  motion_art:
+    media_type: video
+    task_title: "Review generated video (flf2v)"
+    task_description: "Which is the best version of the video?"
+    task_count: 1
+    task_timeout_seconds: 3600
+
+lambda_steps:
+  submit_a2i_flf2v:
+    lambda_path: submit_a2i_review
+    a2i_name: motion_art
+    media_type: video
+
+pipeline_graph:
+  captioning: []
+  flf2v: ["captioning"]
+  vbench_flf2v: ["flf2v"]
+  submit_a2i_flf2v: ["flf2v"]

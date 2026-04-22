@@ -1,0 +1,57 @@
+version: 0.2
+
+# Shared buildspec for all processing job container builds.
+# Skips Docker build if the content hash of the step directory + common/
+# already exists as an image tag in ECR.
+
+env:
+  variables:
+    SKIP_BUILD: "false"
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPO_URI
+      - echo Logging in to SageMaker DLC ECR for base images...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 763104351884.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      # Compute content hash of step dir + common/ to detect changes
+      - echo "Computing content hash for $STEP_NAME..."
+      - cp -r common/ $STEP_NAME/common/
+      - cp -r schema/ $STEP_NAME/schema/
+      - export CONTENT_HASH=$(find $STEP_NAME -type f | sort | xargs sha256sum | sha256sum | cut -d' ' -f1 | head -c 12)
+      - echo "Content hash = $CONTENT_HASH"
+      - export ECR_REPO_NAME=$(echo $ECR_REPO_URI | sed 's|.*amazonaws.com/||')
+      # Check if this hash already exists in ECR
+      - |
+        if aws ecr describe-images --repository-name $ECR_REPO_NAME --image-ids imageTag=$CONTENT_HASH 2>/dev/null; then
+          echo "Image with hash $CONTENT_HASH already exists — skipping build"
+          MANIFEST=$(aws ecr batch-get-image --repository-name $ECR_REPO_NAME --image-ids imageTag=$CONTENT_HASH --query 'images[0].imageManifest' --output text)
+          aws ecr put-image --repository-name $ECR_REPO_NAME --image-tag latest --image-manifest "$MANIFEST" 2>/dev/null || true
+          export SKIP_BUILD=true
+        else
+          echo "No cached image for hash $CONTENT_HASH — will build"
+        fi
+  build:
+    commands:
+      - |
+        if [ "$SKIP_BUILD" = "true" ]; then
+          echo "Skipping Docker build (cached)"
+        else
+          echo "Building Docker image for $STEP_NAME..."
+          docker build -t $ECR_REPO_URI:latest -f $STEP_NAME/Dockerfile $STEP_NAME
+          docker tag $ECR_REPO_URI:latest $ECR_REPO_URI:$CONTENT_HASH
+          export BUILD_TAG=$(echo $CODEBUILD_BUILD_ID | sed 's/.*://')
+          docker tag $ECR_REPO_URI:latest $ECR_REPO_URI:$BUILD_TAG
+        fi
+  post_build:
+    commands:
+      - |
+        if [ "$SKIP_BUILD" = "true" ]; then
+          echo "Skipping push (cached)"
+        else
+          echo "Pushing Docker image..."
+          docker push $ECR_REPO_URI:latest
+          docker push $ECR_REPO_URI:$CONTENT_HASH
+          docker push $ECR_REPO_URI:$BUILD_TAG
+        fi

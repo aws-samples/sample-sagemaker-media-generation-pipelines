@@ -1,0 +1,12 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.13
+    commands:
+      - pip install boto3 loguru
+  build:
+    commands:
+      - cd model_download
+      - python main.py

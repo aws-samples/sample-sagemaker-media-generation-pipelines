@@ -1,0 +1,35 @@
+<!-- nosemgrep: html.security.audit.missing-integrity.missing-integrity — SRI hash pinned to current CDN version -->
+<script src="https://assets.crowd.aws/crowd-html-elements.js" integrity="sha384-Cydqes61x9n0ierkB1I1Hf8j0ZcES9g4gfJ48c70KFpCxt+0warwmtBmoaqxML5s" crossorigin="anonymous"></script>
+<style>
+  .prompt-box{background:#f0f4ff;border:1px solid #b0c4de;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:14px;line-height:1.5}
+  .prompt-box strong{display:block;margin-bottom:4px}
+  .grid{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:16px}
+  .card{flex:1 1 300px;max-width:480px;border:1px solid #ccc;border-radius:8px;padding:12px;text-align:center}
+  .card video{width:100%;border-radius:4px}
+  .card label{display:block;margin-top:8px;font-weight:600;cursor:pointer}
+</style>
+<crowd-form>
+  <h2>{{ task.input.taskTitle }}</h2>
+  <p>{{ task.input.taskDescription }}</p>
+  {% if task.input.prompt %}
+  <div class="prompt-box">
+    <strong>Prompt:</strong>
+    {{ task.input.prompt }}
+  </div>
+  {% endif %}
+  <div class="grid">
+    {% for asset in task.input.assets %}
+    <div class="card">
+      <video controls preload="auto"><source src="{{ asset.s3_uri | grant_read_access }}" type="video/mp4" />Your browser does not support the video tag.</video>
+      <label><input type="radio" name="selected" value="{{ asset.name }}" required /> {{ asset.label }}</label>
+    </div>
+    {% endfor %}
+  </div>
+  <crowd-button form-action="submit" variant="primary">Submit</crowd-button>
+  <full-instructions header="Instructions">
+    <p>Watch all videos side by side and select the best one.</p>
+  </full-instructions>
+  <short-instructions>
+    <p>Pick the best video.</p>
+  </short-instructions>
+</crowd-form>

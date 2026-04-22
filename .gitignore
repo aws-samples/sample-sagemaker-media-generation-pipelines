@@ -1,0 +1,56 @@
+*.swp
+package-lock.json
+__pycache__
+.pytest_cache
+.venv
+*.egg-info
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+.idea
+.vscode
+.env
+
+cdk.context.json
+uv.lock
+
+# Generated at synth time from pipeline config YAML
+processing_job/model_download/*_downloads.json
+processing_job/model_download/downloads.json
+processing_job/schema/
+.hypothesis/*
+.ruff_cache/
+.DS_Store
+
+# Data exports (CSV, XLSX)
+data/
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# Temporary CDK output directories
+cdk.out.*/
+
+# ASH security scan output — keep curated reports, ignore volatile generated artifacts
+security/scanners/
+security/converted/
+security/analysis/
+security/.DS_Store
+security/ash.log
+security/ash-scan-set-files-list.txt
+security/ash_aggregated_results.json
+# Raw multi-format scan outputs (regenerated every run)
+security/reports/ash.csv
+security/reports/ash.cdx.json
+security/reports/ash.cwlog.json
+security/reports/ash.flat.json
+security/reports/ash.gl-sast-report.json
+security/reports/ash.html
+security/reports/ash.junit.xml
+security/reports/ash.ocsf.json
+security/reports/ash.s3.json
+security/reports/ash.sarif
+security/reports/ash.xlsx

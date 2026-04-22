@@ -1,0 +1,11 @@
+strands-agents
+strands-agents-bedrock
+boto3
+loguru
+datasets
+pyarrow
+Pillow
+requests
+opensearch-py
+requests-aws4auth
+pandas

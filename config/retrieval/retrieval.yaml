@@ -1,0 +1,10 @@
+collection_name: retrieval-images
+embedding_model_id: amazon.nova-2-multimodal-embeddings-v1:0
+embedding_dimension: 1024
+index_name: image-vectors
+query_k: 1
+sqs_visibility_timeout_seconds: 960
+sqs_max_receive_count: 3
+ingest_lambda_timeout_seconds: 300
+ingest_lambda_memory_mb: 2048
+ingest_lambda_reserved_concurrency: 40

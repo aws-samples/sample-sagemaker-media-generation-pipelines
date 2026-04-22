@@ -1,0 +1,44 @@
+construct_id: t2i
+
+s3_downloads:
+  # Z-Image-Turbo
+  - url: "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors"
+    path: "z_image_turbo/text_encoders/qwen_3_4b.safetensors"
+  - url: "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/vae/ae.safetensors"
+    path: "z_image_turbo/vae/ae.safetensors"
+  - url: "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors"
+    path: "z_image_turbo/diffusion_models/z_image_turbo_bf16.safetensors"
+
+dynamodb:
+  partition_key: id
+  sort_key: step
+
+steps:
+  t2i:
+    InstanceCount: 2
+    InstanceType: ml.g5.xlarge
+    VolumeSizeInGB: 50
+    ContainerEntrypoint: ["python3", "main.py"]
+    ContainerArguments: ["--generate"]
+    models_prefix: ["z_image_turbo"]
+    num_assets_per_prompt: 3
+
+# A2I human review configurations
+a2i:
+  t2i:
+    media_type: image
+    task_title: "Review generated image"
+    task_description: "Is this image good?"
+    task_count: 1
+    task_timeout_seconds: 3600
+
+# Lambda steps invoked as SageMaker Pipeline steps
+lambda_steps:
+  submit_a2i_t2i:
+    lambda_path: submit_a2i_review
+    a2i_name: t2i
+    media_type: image
+
+pipeline_graph:
+  t2i: []
+  submit_a2i_t2i: ["t2i"]

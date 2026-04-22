@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPO_URI
+      - echo Logging in to SageMaker ECR for base image...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 763104351884.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+  build:
+    commands:
+      - echo Copying common/ into step directory...
+      - cp -r common/ $STEP_NAME/common/
+      - cp -r schema/ $STEP_NAME/schema/
+      - echo Building Docker image...
+      - DOCKER_BUILDKIT=0 docker build -t $ECR_REPO_URI:latest -f $STEP_NAME/Dockerfile $STEP_NAME
+      - export BUILD_TAG=$(echo $CODEBUILD_BUILD_ID | sed 's/.*://')
+      - docker tag $ECR_REPO_URI:latest $ECR_REPO_URI:$BUILD_TAG
+  post_build:
+    commands:
+      - echo Pushing Docker image...
+      - docker push $ECR_REPO_URI:latest
+      - docker push $ECR_REPO_URI:$BUILD_TAG
